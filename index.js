@@ -19,6 +19,33 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
+  if(cmd === `${prefix}wyrzuc`){
+
+    let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!kUser) return message.channel.send("Nie moge znaleźć użytkownika!");
+    let kReason = args.join(" ").slice(22);
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("Nope!");
+    if(kUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("Ten użytkownik nie może być zbanowany!");
+
+    let kickEmbed = new Discord.RichEmbed()
+    .setDescription("~Wyrzucanie~")
+    .setColor("#bc0000")
+    .addField("Wyrzucony użytkownik", `${kUser} z ID: ${kUser.id}`)
+    .addField("Wyrzucony przez", `<@${message.author.id}> z ID: ${message.author.id}`)
+    .addField("Wyrzucony na kanale", message.channel)
+    .addField("Czas", message.createdAt)
+    .addField("Powód", kReason);
+
+    let incidentchannel = message.guild.channels.find(`name`, "kicki");
+    if(!incidentchannel) return message.channel.send("Nie znaleziono kanału #kicki")
+
+    message.guild.member(kUser).ban(kReason);
+    incidentchannel.send(kickEmbed);
+
+    return;
+  }
+
+
   if(cmd === `${prefix}ban`){
 
     let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
@@ -92,7 +119,8 @@ bot.on("message", async message => {
     .addField("a!zapros - Zaproś mnie na serwer :)")
     .addField("a!zglos <uzytkownik> <powód>")
     .addField("lenny - Coś fajnego ( ͡° ͜ʖ ͡°)")
-    .addField("a!ban <uzytkownik> <powód> - Zbanuj za złamanie regulaminu")
+    .addField("a!ban <uzytkownik> <powód>")
+    .addField("a!wyrzuc <uzytkownik> <powód>")
     message.author.send(embed);
   }
 
