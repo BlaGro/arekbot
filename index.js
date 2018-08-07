@@ -6,7 +6,7 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.on("ready", async () => {
   console.log(`${bot.user.username} jest online`);
 
-  bot.user.setActivity("co robi Arek | a!pomoc", {type: "WATCHING"});
+  bot.user.setActivity("co robi Arek | Narazie nic nie robie", {type: "WATCHING"});
 
 });
 
@@ -18,10 +18,6 @@ bot.on("message", async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
-  
-  if(cmd === `${prefix}lenny`){
-    return message.channel.send("")
-  }
 
   if(cmd === `${prefix}zapros`){
 
@@ -54,7 +50,7 @@ bot.on("message", async message => {
     .addField("TAG", bot.user.tag)
     .addField("ID ostatniej wiadomości", bot.user.lastMessageID || "Brak")
     .addField("ID Avataru", bot.user.avatar)
-    message.channel.send(botEmbed);
+     return message.channel.send(embed);
   }
 
 });
