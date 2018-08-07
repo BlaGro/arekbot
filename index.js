@@ -6,7 +6,7 @@ const bot = new Discord.Client({disableEveryone: true});
 bot.on("ready", async () => {
   console.log(`${bot.user.username} jest online`);
 
-  bot.user.setActivity("co robi Arek | Narazie nic nie robie", {type: "WATCHING"});
+  bot.user.setActivity("co robi Arek | a!pomoc", {type: "WATCHING"});
 
 });
 
