@@ -18,6 +18,10 @@ bot.on("message", async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
+  
+  if(cmd === `${prefix}lenny`){
+    return message.channel.send("")
+  }
 
   if(cmd === `${prefix}zapros`){
 
@@ -50,7 +54,7 @@ bot.on("message", async message => {
     .addField("TAG", bot.user.tag)
     .addField("ID ostatniej wiadomości", bot.user.lastMessageID || "Brak")
     .addField("ID Avataru", bot.user.avatar)
-    message.channel.send(embed);
+    message.channel.send(botEmbed);
   }
 
 });
