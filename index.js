@@ -18,6 +18,10 @@ bot.on("message", async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
+  
+  if(cmd === "lenny"){
+    return message.channel.send("( ͡° ͜ʖ ͡°)")
+  }
 
   if(cmd === `${prefix}zglos`){
 
