@@ -18,7 +18,33 @@ bot.on("message", async message => {
   let messageArray = message.content.split(" ");
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
-  
+
+  if(cmd === `${prefix}ban`){
+
+    let bUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!bUser) return message.channel.send("Nie moge znaleźć użytkownika!");
+    let bReason = args.join(" ").slice(22);
+    if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("Nope!");
+    if(bUser.hasPermission("MANAGE_MESSAGES")) return message.channel.send("Ten użytkownik nie może być zbanowany!");
+
+    let banEmbed = new Discord.RichEmbed()
+    .setDescription("~Ban~")
+    .setColor("#bc0000")
+    .addField("Zbanowany użytkownik", `${bUser} z ID: ${bUser.id}`)
+    .addField("Zbanowany przez", `<@${message.author.id}> z ID: ${message.author.id}`)
+    .addField("Zbanowany na kanale", message.channel)
+    .addField("Czas", message.createdAt)
+    .addField("Powód", bReason);
+
+    let incidentchannel = message.guild.channels.find(`name`, "bany");
+    if(!incidentchannel) return message.channel.send("Nie znaleziono kanału #bany")
+
+    message.guild.member(bUser).ban(bReason);
+    incidentchannel.send(banEmbed);
+
+    return;
+  }
+
   if(cmd === "lenny"){
     return message.channel.send("( ͡° ͜ʖ ͡°)")
   }
@@ -27,7 +53,7 @@ bot.on("message", async message => {
 
     let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!rUser) return message.channel.send("Nie znaleziono użytkownika");
-    let reason = args.join(" ").slice(22);
+    let rreason = args.join(" ").slice(22);
 
     let reportEmbed = new Discord.RichEmbed()
     .setDescription("Zgloszenie")
@@ -36,7 +62,7 @@ bot.on("message", async message => {
     .addField("Zgłoszony przez", `${message.author} z ID: ${message.author.id}`)
     .addField("Kanał", message.channel)
     .addField("Czas", message.createdAt)
-    .addField("Powód", reason);
+    .addField("Powód", rreason);
 
     let reportschannel = message.guild.channels.find(`name`, "zgloszenia");
     if(!reportschannel) return message.channel.send("Nie znaleziono kanału #zgloszenia");
@@ -64,7 +90,7 @@ bot.on("message", async message => {
     .setColor("#4286f4")
     .addField("a!bot - Info o bocie")
     .addField("a!zapros - Zaproś mnie na serwer :)")
-    .addField("a!zglos <uzytkownik> <powód> - Zgłoś użytkownika za złamanie regulaminu")
+    .addField("a!zglos <uzytkownik> <powód>")
     .addField("lenny - Coś fajnego ( ͡° ͜ʖ ͡°)")
     message.author.send(embed);
   }
