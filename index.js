@@ -19,6 +19,23 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
+  if(cmd === `${prefix}propozycja`){
+
+    let reason = args.join(" ");
+
+    let sEmbed = new Discord.RichEmbed()
+    .setDescription("Propozycja")
+    .setColor("#10ff00")
+    .addField("Użytkownik proponujący", message.author.username)
+    .addField("Treść", reason || "Brak");
+
+    let sRoom = message.guild.channels.find(`name`, "propozycje");
+    if(!sRoom) return message.channel.send("Nie znaleziono kanału #propozycje");
+
+    sRoom.send(sEmbed);
+    return;
+  }
+
   if(cmd === `${prefix}wyrzuc`){
 
     let kUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
@@ -119,8 +136,9 @@ bot.on("message", async message => {
     .addField("a!zapros - Zaproś mnie na serwer :)")
     .addField("a!zglos <uzytkownik> <powód>")
     .addField("lenny - Coś fajnego ( ͡° ͜ʖ ͡°)")
-    .addField("a!ban <uzytkownik> <powód>")
-    .addField("a!wyrzuc <uzytkownik> <powód>")
+    .addField("a!ban <uzytkownik> <powód> - Zbanuj za złamanie regulaminu")
+    .addField("a!wyrzuc <uzytkownik> <powód> - Wyrzuc za złamanie regulaminu")
+    .addField("a!propozycja <tekst> - Zaproponuj coś ;)")
     message.author.send(embed);
   }
 
