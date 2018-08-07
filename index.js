@@ -65,7 +65,7 @@ bot.on("message", async message => {
     .addField("a!bot - Info o bocie")
     .addField("a!zapros - Zaproś mnie na serwer :)")
     .addField("a!zglos <uzytkownik> <powód> - Zgłoś użytkownika za złamanie regulaminu")
-    .addField("Narazie tyle")
+    .addField("lenny - Coś fajnego ( ͡° ͜ʖ ͡°)")
     message.author.send(embed);
   }
 
