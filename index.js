@@ -92,6 +92,7 @@ bot.on("message", async message => {
     .addField("a!zapros - Zaproś mnie na serwer :)")
     .addField("a!zglos <uzytkownik> <powód>")
     .addField("lenny - Coś fajnego ( ͡° ͜ʖ ͡°)")
+    .addField("a!ban <uzytkownik> <powód> - Zbanuj za złamanie regulaminu")
     message.author.send(embed);
   }
 
