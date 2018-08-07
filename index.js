@@ -23,7 +23,7 @@ bot.on("message", async message => {
 
     let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
     if(!rUser) return message.channel.send("Nie znaleziono użytkownika");
-    let rreason = args.join(" ").slice(22);
+    let reason = args.join(" ").slice(22);
 
     let reportEmbed = new Discord.RichEmbed()
     .setDescription("Zgloszenie")
@@ -32,7 +32,7 @@ bot.on("message", async message => {
     .addField("Zgłoszony przez", `${message.author} z ID: ${message.author.id}`)
     .addField("Kanał", message.channel)
     .addField("Czas", message.createdAt)
-    .addField("Powód", rreason);
+    .addField("Powód", reason);
 
     let reportschannel = message.guild.channels.find(`name`, "zgloszenia");
     if(!reportschannel) return message.channel.send("Nie znaleziono kanału #zgloszenia");
