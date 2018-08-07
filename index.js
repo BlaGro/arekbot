@@ -19,6 +19,31 @@ bot.on("message", async message => {
   let cmd = messageArray[0];
   let args = messageArray.slice(1);
 
+  if(cmd === `${prefix}zglos`){
+
+    let rUser = message.guild.member(message.mentions.users.first() || message.guild.members.get(args[0]));
+    if(!rUser) return message.channel.send("Nie znaleziono użytkownika");
+    let rreason = args.join(" ").slice(22);
+
+    let reportEmbed = new Discord.RichEmbed()
+    .setDescription("Zgloszenie")
+    .setColor("#15f153")
+    .addField("Zgłoszony użytkownik", `${rUser} z ID: ${rUser.id}`)
+    .addField("Zgłoszony przez", `${message.author} z ID: ${message.author.id}`)
+    .addField("Kanał", message.channel)
+    .addField("Czas", message.createdAt)
+    .addField("Powód", rreason);
+
+    let reportschannel = message.guild.channels.find(`name`, "zgloszenia");
+    if(!reportschannel) return message.channel.send("Nie znaleziono kanału #zgloszenia");
+
+
+    message.delete().catch(O_o=>{});
+    reportschannel.send(reportEmbed);
+
+    return;
+  }
+
   if(cmd === `${prefix}zapros`){
 
     let embed = new Discord.RichEmbed()
@@ -35,6 +60,7 @@ bot.on("message", async message => {
     .setColor("#4286f4")
     .addField("a!bot - Info o bocie")
     .addField("a!zapros - Zaproś mnie na serwer :)")
+    .addField("a!zglos <uzytkownik> <powód> - Zgłoś użytkownika za złamanie regulaminu")
     .addField("Narazie tyle")
     message.author.send(embed);
   }
